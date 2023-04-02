@@ -1,9 +1,8 @@
 Description: >
-    Carlos Rivas / Udacity
-    This template deploys a VPC, with a pair of public and private subnets spread 
-    across two Availabilty Zones. It deploys an Internet Gateway, with a default 
-    route on the public subnets. It deploys a pair of NAT Gateways (one in each AZ), 
-    and default routes for them in the private subnets.
+    Nceba Matandabuzo / Udacity Cloud DevOps Project 2 
+    This template script deploys the infrastructure for a highly available web app. 
+    It contains a VPC, with pair of public/private subnets expanded across two Availabilty Zones, an Internet Gateway and pair of NAT Gateways (one in each AZ). 
+    It deploys a default routes for resources to be deployed in the private subnets.
 
 Parameters:
 
@@ -37,7 +36,30 @@ Parameters:
         Default: 10.0.3.0/24
 
 Resources:
-
+    
+    IAMCustomBucketRole:
+        Type: "AWS::IAM::Role"
+        Properties:
+            ManagedPolicyArns:
+               -   "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+            AssumeRolePolicyDocument:
+                Version: "2012-10-17"
+                Statement:
+                    -   Effect: "Allow"
+                        Principal:
+                            Service:
+                                -    "ec2.amazonaws.com"
+                        Action:
+                            -   "sts:AssumeRole"
+            Path: "/"
+    ProfileWithRolesApp:
+        Type: "AWS::IAM::InstanceProfile"
+        Properties:
+            Path: "/"
+            Roles:
+                - !Ref IAMCustomBucketRole
+    
+    
     VPC: 
         Type: AWS::EC2::VPC
         Properties:

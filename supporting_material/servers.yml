@@ -1,11 +1,27 @@
 Description: >
-    Carlos Rivas / Udacity 2019
+    Nceba Matandabuzo / Udacity 2023
+    The script creates IAM role, security groupds, Loadbalancer and Autoscaling
 
 Parameters:
 
     EnvironmentName:
         Description: An environment name that will be prefixed to resource names
         Type: String
+        
+  EBSVolumeSize:
+    Description: The EBS volume size attached to an EC2 instance. 
+    Type: Number
+
+  MinEC2Servers:
+    Description: Please set the minimum number of server/ec2 instances
+    Type: Number
+    Default: 4
+
+  MaxEC2Servers:
+    Description: Please set the minimum number of server/ec2 instances
+    Type: Number
+    Default: 5
+    
 Resources:
   LBSecGroup:
     Type: AWS::EC2::SecurityGroup
